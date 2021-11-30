@@ -8,7 +8,7 @@ import (
 
 func main() {
 	var nowFactory timeFactory.Now
-	// default, uninitialized timeFactory.Now returns the current time
+	// default, uninitialized timeFactory.Now returns the current time, as though you called time.Now()
 	log.Println(nowFactory.Get())
 
 	// nowFactory is over-ridden with a custom time factory
@@ -18,8 +18,8 @@ func main() {
 	// calling it returns the time returned from the custom time factory
 	log.Println(nowFactory.Get())
 
-	// More complicated methods can be used to setup a series of fake times
-	nowFactory = timeFactory.MockTimeWithDurations(
+	// More complicated methods can be used to set up a series of fake times
+	nowFactory = timeFactory.ReturnTimeWithDurations(
 		time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC),
 		24*time.Hour,
 		1*time.Hour,

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func Test_startAtAndAddDurations(t *testing.T) {
+func Test_ReturnTimeWithDurations(t *testing.T) {
 	cases := map[string]struct {
 		start    time.Time
 		adds     []time.Duration
@@ -31,7 +31,7 @@ func Test_startAtAndAddDurations(t *testing.T) {
 	for caseName, td := range cases {
 		t.Run(caseName, func(t *testing.T) {
 			g := NewWithT(t)
-			actual := getTimesUntilEmpty(MockTimeWithDurations(td.start, td.adds...))
+			actual := getTimesUntilEmpty(ReturnTimeWithDurations(td.start, td.adds...))
 			g.Expect(actual).Should(ConsistOf(td.expected))
 		})
 	}

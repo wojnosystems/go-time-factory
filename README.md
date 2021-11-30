@@ -8,7 +8,7 @@ Helper package/module that provides ways of simulating calls to `time.Now()`. Us
 
 `go get -u github.com/wojnosystems/go-time-factory`
 
-## Example Struct
+## Example use
 
 ```go
 package main
@@ -21,22 +21,22 @@ import (
 
 func main() {
 	var nowFactory timeFactory.Now
-	// default, uninitialized timeFactory.Now returns the current time
+	// default, uninitialized timeFactory.Now returns the current time, as though you called time.Now()
 	log.Println(nowFactory.Get())
 
 	// nowFactory is over-ridden with a custom time factory
-	nowFactory = func()time.Time {
+	nowFactory = func() time.Time {
 		return time.Date(1999, 12, 31, 0, 0, 0, 0, time.UTC)
 	}
 	// calling it returns the time returned from the custom time factory
 	log.Println(nowFactory.Get())
 
-	// More complicated methods can be used to setup a series of fake times
-	nowFactory = timeFactory.MockTimeWithDurations(
+	// More complicated methods can be used to set up a series of fake times
+	nowFactory = timeFactory.ReturnTimeWithDurations(
 		time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC),
-		24 * time.Hour,
-		1 * time.Hour,
-		2 * time.Hour,
+		24*time.Hour,
+		1*time.Hour,
+		2*time.Hour,
 	)
 	for i := 0; i < 5; i++ {
 		log.Println(nowFactory.Get())
@@ -56,7 +56,7 @@ The above example prints:
 2021/11/29 22:54:00 0001-01-01 00:00:00 +0000 UTC
 ```
 
-What's going on here? We're creating a struct (you don't have to, though) that contains our timeFactory.Now struct type. By default, this value is nil. When called on a nil-valued struct, the Get method will return the default time.Now() result. That's why the first Println returns a non-utc time.
+What's going on here? We're creating a variable of the timeFactory.Now struct type. By default, this value is nil. When called on a nil-valued struct, the Get method will return the default time.Now() result. That's why the first Println returns a non-utc time.
 
 However, we're overriding the nil value and replacing it with a custom generator and setting it to the year, 1999.
 

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func Test_simulateNows(t *testing.T) {
+func Test_ReturnTimes(t *testing.T) {
 	cases := map[string]struct {
 		input []time.Time
 	}{
@@ -32,7 +32,7 @@ func Test_simulateNows(t *testing.T) {
 	for caseName, td := range cases {
 		t.Run(caseName, func(t *testing.T) {
 			g := NewWithT(t)
-			actual := getTimesUntilEmpty(MockTimes(td.input...))
+			actual := getTimesUntilEmpty(ReturnTimes(td.input...))
 			g.Expect(actual).Should(ConsistOf(td.input))
 		})
 	}
